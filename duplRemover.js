@@ -11,28 +11,22 @@ const rl = readline.createInterface({
     input: process.stdin
 });
 
-var lines = [];
-
-function duplRemover(input) {
-    input = input.slice(1);
-  var output = [];
-  for (var i=0; i<input.length; i++) {    
-    input[i]!==input[i-1] ? output.push(input[i]) : output;  
-  }
-  return output;
-}
+var prevLine='';
+var output=[];
 
 rl.on('line', (line) => {
-    lines.push(line);
+    
+    if (line !== prevLine) {
+        output.push(line);
+    }
+    prevLine = line;    
 
 });
 
 
-rl.on('close', () => {
-    var res = duplRemover(lines); 
-    
-  
-    for (var i=0; i<res.length; i++) {  
-        process.stdout.write(res[i]);
+rl.on('close', () => {      
+    output = output.slice(1);
+    for (var i=0; i<output.length; i++) {  
+        process.stdout.write(output[i] + '\n');
     };
 });
